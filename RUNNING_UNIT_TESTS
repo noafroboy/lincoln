@@ -1,0 +1,8 @@
+== Creating the test database
+
+This gem currently only supports Mysql. To run the unit tests, first create a database named lincoln_test on
+localhost. See database.rb for connection details for the test suite.
+
+== Running with Rake
+
+After creating the default database, run "rake" to run all the tests.

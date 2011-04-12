@@ -4,16 +4,12 @@ require 'rubygems'
 require 'rspec'
 require 'rspec/autorun'
 
-# Need to override ActivreRecord::Base before we require lincoln
-# for testing
+# Load the schema
 require 'active_record'
-class ActiveRecord::Base
-  def self.columns
-    [ActiveRecord::ConnectionAdapters::Column.new("column1", nil, "string", false), 
-      ActiveRecord::ConnectionAdapters::Column.new("column2", nil, "string", false), 
-      ActiveRecord::ConnectionAdapters::Column.new("column3", nil, "string", false)]
-  end
-end
+TEST_ROOT = File.expand_path(File.dirname(__FILE__))
+$: << File.join(TEST_ROOT, 'lib')
+load 'database.rb'
+
 require 'lincoln'
 
 RSpec.configure do |config|
