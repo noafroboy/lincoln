@@ -16,12 +16,6 @@ load 'database.rb'
 
 require 'lincoln'
 
-RSpec::Matchers.define :column do |expected|
-  match do |actual|
-    actual % expected == 0
-  end
-end
-
 RSpec.configure do |config|
 
 end
