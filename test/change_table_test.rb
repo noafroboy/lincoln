@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + "/spec_helper"
+require File.dirname(__FILE__) + "/test_helper"
 
-describe "change_table" do
-  before(:each) do
+class ChangeTableTest < Test::Unit::TestCase
+  def setup
     create_my_models
   end
   
-  it "adds a new column" do
+  should "add columns" do
     MyModelsAddColumn.up
     MyModel.reset_column_information
     
@@ -32,7 +32,7 @@ describe "change_table" do
     assert_column MyModel, "model2_type", :type => :string
   end
   
-  it "removes columns" do
+  should "remove columns" do
     MyModelsAddColumn.up
     MyModelsRemoveColumn.up
     MyModel.reset_column_information
@@ -46,7 +46,7 @@ describe "change_table" do
     assert_no_column MyModel, "model2_type"
   end
   
-  it "changes columns" do
+  should "changes columns" do
     MyModelsAddColumn.up
     MyModelsChangeColumn.up
     MyModel.reset_column_information
@@ -57,18 +57,20 @@ describe "change_table" do
     assert_column MyModel, "column3", :limit => 20
   end
   
+  private
+  
   def assert_index(klass, column)
     indexes = klass.connection.indexes(klass.table_name).find_all do |index|
       index.columns == [column.to_s]
     end
-    indexes.size.should == 1
+    assert_equal 1, indexes.size
   end
   
   def assert_no_index(klass, column)
     indexes = klass.connection.indexes(klass.table_name).find_all do |index|
       index.columns == [column.to_s]
     end
-    indexes.size.should == 0
+    assert_equal 0, indexes.size
   end
   
   # MyModel.should have_column("column2").with_type("string").with_default
@@ -79,17 +81,17 @@ describe "change_table" do
     limit = options[:limit]
     
     columns = klass.columns.find_all { |c| c.name == name.to_s }
-    columns.size.should == 1
+    assert_equal 1, columns.size
     
     column = columns.first
     options.each_pair do |option, value|
-      column.send(option).to_s.should == value.to_s
+      assert_equal value.to_s, column.send(option).to_s
     end
   end
   
   def assert_no_column(klass, name)
     columns = klass.columns.find_all { |c| c.name == name.to_s }
-    columns.size.should == 0
+    assert_equal 0, columns.size
   end
 end
 
