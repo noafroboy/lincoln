@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/test_helper"
 
-class AttrIgnoreTest < Test::Unit::TestCase
-  def setup
+class AttrIgnoreTest < ActiveSupport::TestCase
+  setup do
     create_my_models
   end
   
