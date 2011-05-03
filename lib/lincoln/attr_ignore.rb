@@ -38,3 +38,5 @@ module Lincoln
     end
   end
 end
+
+ActiveRecord::Base.send(:include, Lincoln::AttrIgnore)

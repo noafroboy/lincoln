@@ -13,7 +13,7 @@ class MyModelTest < ActiveSupport::TestCase
 
     should have_index("column2")
     should have_column("column4").with_type(:string)
-
+    
     should have_column("created_at")
     should have_column("updated_at")
     
